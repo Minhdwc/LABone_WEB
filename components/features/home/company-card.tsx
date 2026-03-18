@@ -14,10 +14,13 @@ export default function CompanyCard() {
       <Image
         src='/assets/company/companyLabone.jpg'
         alt='LABone Company'
+        fetchPriority='high'
         fill
         priority
         className='object-cover'
-        sizes='100vw'
+        sizes='(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1440px'
+        placeholder='blur'
+        blurDataURL='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAQEBUQEBIQFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAK8BIAMBIgACEQEDEQH/xAAZAAADAQEBAAAAAAAAAAAAAAABAgMABAb/xAApEAACAQQBAwMDBQAAAAAAAAABAgMABBEhEjFBBSJRYYEycaGx/8QAFgEBAQEAAAAAAAAAAAAAAAAAAQID/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQIAEf/aAAwDAQACEQMRAD8A9xREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQH//2Q=='
       />
 
       {/* Dark gradient overlay */}

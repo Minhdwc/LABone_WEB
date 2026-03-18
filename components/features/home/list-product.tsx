@@ -99,12 +99,15 @@ export default function ListProduct({
   const paginatedProducts = displayData.data
   const useCarousel = listProduct.data.length >= 5
 
-  // Autoplay carousel: scroll next every 3s, infinite loop
+  // Autoplay carousel: scroll next every 3s, guard to avoid unnecessary work when cannot scroll
   useEffect(() => {
     if (!emblaApi || isPaused || !useCarousel) return
 
     const interval = setInterval(() => {
-      emblaApi.scrollNext()
+      if (!emblaApi) return
+      if (emblaApi.canScrollNext()) {
+        emblaApi.scrollNext()
+      }
     }, 3000)
 
     return () => clearInterval(interval)

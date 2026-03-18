@@ -57,7 +57,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='vi'>
-      <body className={'font-sans antialiased'}>
+      <head>
+        <link
+          rel='preconnect'
+          href='https://labone-costmanagement.s3.ap-southeast-2.amazonaws.com'
+          crossOrigin='anonymous'
+        />
+      </head>
+      <body className='font-sans antialiased'>
         <CartProvider>
           <LanguageSync />
           <Toaster />

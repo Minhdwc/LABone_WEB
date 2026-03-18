@@ -42,12 +42,15 @@ export default function ListMenu({ menus, locale }: ListMenuProps) {
     router.push(`${basePath}/${menuPrefix}/${getMenuSlug(menu)}`)
   }
 
-  // Autoplay logic
+  // Autoplay logic with guard to avoid unnecessary scroll calls
   useEffect(() => {
     if (!emblaApi || isPaused) return
 
     const interval = setInterval(() => {
-      emblaApi.scrollNext()
+      if (!emblaApi) return
+      if (emblaApi.canScrollNext()) {
+        emblaApi.scrollNext()
+      }
     }, 3000)
 
     return () => clearInterval(interval)

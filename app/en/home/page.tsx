@@ -72,15 +72,15 @@ async function getLabAcademyPosts() {
 }
 
 const beVietnamPro = Be_Vietnam_Pro({
-  subsets: ['latin', 'latin-ext', 'vietnamese'],
-  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin', 'vietnamese'],
+  weight: ['400', '600', '700'],
   variable: '--font-home-main-body',
   display: 'swap',
 })
 
 const playfair = Playfair_Display({
-  subsets: ['latin', 'latin-ext', 'vietnamese'],
-  weight: ['400', '500', '600', '700', '800', '900'],
+  subsets: ['latin', 'vietnamese'],
+  weight: ['400', '600', '700'],
   variable: '--font-home-main-display',
   display: 'swap',
 })
