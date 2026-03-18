@@ -1,0 +1,44 @@
+services: # Khai báo các service trong stack Compose.
+  app: # Service chạy ứng dụng Next.js.
+    build: # Thông tin build image cho service.
+      context: . # Dùng thư mục hiện tại làm build context.
+      dockerfile: Dockerfile # Chỉ định file Dockerfile sử dụng.
+      args: # Biến truyền vào Dockerfile khi build.
+        NODE_VERSION: 22.14.0 # Chọn phiên bản Node.js 22.14.0.
+    environment: # Biến môi trường cho container lúc chạy.
+      NODE_ENV: production # Thiết lập chế độ production.
+      PORT: 3000 # Port ứng dụng sẽ lắng nghe.
+      # ✅ AWS Configuration - Load từ .env.production hoặc set trực tiếp
+    ports: # Cấu hình ánh xạ port host <-> container.
+      - '3000:3000' # Mở port 3000 bên ngoài tới port 3000 nội bộ.
+    restart: unless-stopped # Container tự khởi động trừ khi stop thủ công.
+    deploy: # Giới hạn tài nguyên (áp dụng tốt nhất với Swarm).
+      resources:
+        limits:
+          cpus: '0.5' # Giới hạn container chỉ dùng 0.5 CPU.
+          memory: 1024M # Giới hạn bộ nhớ tối đa 1 GB.
+    volumes: # Mount file/thư mục từ host vào container.
+      - ./.env.production:/app/.env.production:ro # Gắn file .env.production vào container (chỉ đọc).
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt: # Bảo mật: ngăn container nâng quyền
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck: # Healthcheck giúp tự restart nếu Next.js crash
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          'require("http").get("http://localhost:3000", r=>process.exit(r.statusCode===200?0:1)).on("error",()=>process.exit(1))',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge

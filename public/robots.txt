@@ -1,0 +1,15 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+
+# Host
+Host: https://labone.com.vn/
+
+# Sitemaps
+Sitemap: https://labone.com.vn/sitemap.xml
+Sitemap: https://labone.com.vn/server-sitemap-products.xml
+Sitemap: https://labone.com.vn/server-sitemap-categories.xml
+Sitemap: https://labone.com.vn/server-sitemap-application.xml
