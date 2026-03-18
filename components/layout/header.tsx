@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import SwitchLanguage from '../elements/switch-language'
 import Logo from '@/public/Logo-LABone-png.png'
+import LogoWEBP from '@/public/Logo-LABone-webp.webp'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { FaSearch, FaChevronDown, FaChevronUp, FaShoppingCart } from 'react-icons/fa'
@@ -223,9 +224,8 @@ export default function Header() {
                 <div
                   key={index}
                   data-lab-academy-menu={hasLabAcademySubmenu ? 'true' : undefined}
-                  className={`flex items-center relative ${
-                    index !== aboveNav.length - 1 ? 'border-r border-white/30 pr-3 mr-3' : ''
-                  }`}
+                  className={`flex items-center relative ${index !== aboveNav.length - 1 ? 'border-r border-white/30 pr-3 mr-3' : ''
+                    }`}
                 >
                   <Link
                     prefetch={false}
@@ -348,9 +348,8 @@ export default function Header() {
                                     {currentMenuData.length > 0 ? (
                                       <>
                                         {currentMenuData.map((menu) => {
-                                          const href = `/${language === 'VN' ? 'vi' : 'en'}/${getBasePath(menuType)}/${
-                                            language === 'VN' ? menu.slug_vn : menu.slug_en
-                                          }`
+                                          const href = `/${language === 'VN' ? 'vi' : 'en'}/${getBasePath(menuType)}/${language === 'VN' ? menu.slug_vn : menu.slug_en
+                                            }`
                                           return (
                                             <Link
                                               href={href}
@@ -542,7 +541,7 @@ export default function Header() {
               </SheetContent>
             </Sheet>
             <Link href={`/${language === 'VN' ? '/' : 'en/home'}`} className='flex items-center gap-2'>
-              <Image src={Logo} alt='Logo' className='h-16 w-auto' />
+              <Image src={LogoWEBP} alt='Logo' className='h-16 w-auto' />
             </Link>
           </div>
 
@@ -567,9 +566,8 @@ export default function Header() {
                     prefetch={false}
                     href={item.href}
                     onClick={() => setHoveredItem(null)}
-                    className={`font-medium transition-colors duration-300 flex items-center ${
-                      isHovered ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'
-                    }`}
+                    className={`font-medium transition-colors duration-300 flex items-center ${isHovered ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'
+                      }`}
                   >
                     {item.title}
                     {hasSubmenu &&

@@ -12,11 +12,12 @@ export default function CompanyCard() {
   return (
     <section className='relative w-full h-auto min-h-[360px] sm:min-h-[460px] md:h-[540px] overflow-hidden'>
       <Image
-        src='/assets/company/companyLabone.jpg'
+        src='/assets/company/companyLabone.webp'
         alt='LABone Company'
         fetchPriority='high'
         fill
         priority
+        quality={40}
         className='object-cover'
         sizes='(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1440px'
         placeholder='blur'
