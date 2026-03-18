@@ -2,7 +2,8 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
+    // Enable Next.js image optimization for both local and remote images
+    unoptimized: false,
     remotePatterns: [
       {
         protocol: 'https',
