@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import Image from 'next/image'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
@@ -39,11 +40,29 @@ function getEmbedUrl(url: string): string {
   return url
 }
 
+function getYoutubeThumbnail(url: string): string | null {
+  if (!url.includes('youtube.com/watch') && !url.includes('youtu.be/')) return null
+
+  const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/
+  const match = url.match(youtubeRegex)
+  if (match && match[1]) {
+    // Sử dụng thumbnail chất lượng cao mặc định của YouTube
+    return `https://i.ytimg.com/vi/${match[1]}/hqdefault.jpg`
+  }
+  return null
+}
+
 export function VideoCard({ video, className, variant = 'default' }: VideoCardProps) {
   const embedUrl = React.useMemo(() => getEmbedUrl(video.videoUrl), [video.videoUrl])
-  const [isIframeLoaded, setIsIframeLoaded] = React.useState(false)
+  const thumbnailUrl = React.useMemo(() => getYoutubeThumbnail(video.videoUrl), [video.videoUrl])
+  const [iframeSrc, setIframeSrc] = React.useState<string | null>(null)
 
   const isCompact = variant === 'compact'
+
+  const handlePlayClick = () => {
+    const urlWithAutoplay = embedUrl.includes('?') ? `${embedUrl}&autoplay=1` : `${embedUrl}?autoplay=1`
+    setIframeSrc(urlWithAutoplay)
+  }
 
   return (
     <Card
@@ -55,18 +74,30 @@ export function VideoCard({ video, className, variant = 'default' }: VideoCardPr
       <div
         className={cn('relative overflow-hidden bg-black rounded-t-lg', isCompact ? 'aspect-[4/3]' : 'aspect-video')}
       >
-        {!isIframeLoaded && (
+        {/* Thumbnail hiển thị trước khi load iframe để giữ trải nghiệm trực quan */}
+        {!iframeSrc && thumbnailUrl && (
+          <Image
+            src={thumbnailUrl}
+            alt={video.title}
+            fill
+            sizes={isCompact ? '(max-width: 768px) 100vw, 400px' : '(max-width: 768px) 100vw, 640px'}
+            className='object-cover'
+            loading='lazy'
+          />
+        )}
+
+        {!iframeSrc && (
           <button
             type='button'
             className='absolute inset-0 w-full h-full flex items-center justify-center bg-black/40 text-white text-sm font-medium z-10'
-            onClick={() => setIsIframeLoaded(true)}
+            onClick={handlePlayClick}
           >
             ▶ Xem video
           </button>
         )}
-        {isIframeLoaded && (
+        {iframeSrc && (
           <iframe
-            src={embedUrl}
+            src={iframeSrc}
             title={video.title}
             className='absolute inset-0 w-full h-full'
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
