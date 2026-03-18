@@ -19,6 +19,7 @@ const nextConfig: NextConfig = {
   },
   staticPageGenerationTimeout: 300,
   experimental: {
+    // Keep CSS optimization disabled to avoid missing 'critters' module error during build
     optimizeCss: false,
   },
 }

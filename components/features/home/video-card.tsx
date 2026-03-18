@@ -41,6 +41,7 @@ function getEmbedUrl(url: string): string {
 
 export function VideoCard({ video, className, variant = 'default' }: VideoCardProps) {
   const embedUrl = React.useMemo(() => getEmbedUrl(video.videoUrl), [video.videoUrl])
+  const [isIframeLoaded, setIsIframeLoaded] = React.useState(false)
 
   const isCompact = variant === 'compact'
 
@@ -54,14 +55,25 @@ export function VideoCard({ video, className, variant = 'default' }: VideoCardPr
       <div
         className={cn('relative overflow-hidden bg-black rounded-t-lg', isCompact ? 'aspect-[4/3]' : 'aspect-video')}
       >
-        <iframe
-          src={embedUrl}
-          title={video.title}
-          className='absolute inset-0 w-full h-full'
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-          allowFullScreen
-          loading='lazy'
-        />
+        {!isIframeLoaded && (
+          <button
+            type='button'
+            className='absolute inset-0 w-full h-full flex items-center justify-center bg-black/40 text-white text-sm font-medium z-10'
+            onClick={() => setIsIframeLoaded(true)}
+          >
+            ▶ Xem video
+          </button>
+        )}
+        {isIframeLoaded && (
+          <iframe
+            src={embedUrl}
+            title={video.title}
+            className='absolute inset-0 w-full h-full'
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+            allowFullScreen
+            loading='lazy'
+          />
+        )}
       </div>
 
       {/* Video Description */}
